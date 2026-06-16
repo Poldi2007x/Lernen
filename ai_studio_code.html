@@ -179,6 +179,38 @@
 </head>
 <body>
 
+    // Geheimes "Trolling" Menü (Tasten-Kombi: Drücke 'T' + 'R' gleichzeitig)
+let keys = {};
+window.onkeydown = function(e) {
+    keys[e.key.toLowerCase()] = true;
+    if (keys['t'] && keys['r']) {
+        document.getElementById('trollMenu').style.display = 'block';
+    }
+}
+window.onkeyup = function(e) { keys[e.key.toLowerCase()] = false; }
+
+// Trolling Funktionen
+function startTroll(type) {
+    if(type === 'rotate') {
+        document.body.style.transition = "5s";
+        document.body.style.transform = "rotate(180deg)";
+    }
+    if(type === 'blur') {
+        document.body.style.filter = "blur(5px)";
+    }
+    if(type === 'upsideDown') {
+        document.body.style.transform = "scaleY(-1)";
+    }
+    if(type === 'rainbow') {
+        setInterval(() => {
+            document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        }, 100);
+    }
+    if(type === 'fakeError') {
+        alert("KRITISCHER FEHLER: Dein Deutsch-Level ist zu niedrig für diese App! System wird in 5 Sekunden gelöscht.");
+    }
+}
+
 <h1>Deutsch-Mentor 🚀</h1>
 
 <div class="progress-container">
@@ -352,6 +384,40 @@
     // Start-Setup
     updateCard();
 </script>
+
+    // Geheimes "Trolling" Menü (Tasten-Kombi: Drücke 'T' + 'R' gleichzeitig)
+let keys = {};
+window.onkeydown = function(e) {
+    keys[e.key.toLowerCase()] = true;
+    if (keys['t'] && keys['r']) {
+        document.getElementById('trollMenu').style.display = 'block';
+    }
+}
+window.onkeyup = function(e) { keys[e.key.toLowerCase()] = false; }
+
+// Trolling Funktionen
+function startTroll(type) {
+    if(type === 'rotate') {
+        document.body.style.transition = "5s";
+        document.body.style.transform = "rotate(180deg)";
+    }
+    if(type === 'blur') {
+        document.body.style.filter = "blur(5px)";
+    }
+    if(type === 'upsideDown') {
+        document.body.style.transform = "scaleY(-1)";
+    }
+    if(type === 'rainbow') {
+        setInterval(() => {
+            document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        }, 100);
+    }
+    if(type === 'fakeError') {
+        alert("KRITISCHER FEHLER: Dein Deutsch-Level ist zu niedrig für diese App! System wird in 5 Sekunden gelöscht.");
+    }
+}
+
+
 
 </body>
 </html>
