@@ -283,20 +283,39 @@
 <script>
     // Karteikarten-Daten aus deinen Fotos
     const cards = [
-        { q: "Wie lautet die Adjektiv-Endung im Dativ nach einem Artikel?", a: "Die Endung ist '-n'. (Beispiel: dem alten Mann)" },
-        { q: "Nenne die 4 Arten von Adverbien.", a: "1. Temporal (Wann?), 2. Lokal (Wo?), 3. Modal (Wie?), 4. Kausal (Warum?)" },
-        { q: "Was ist die Ersatzprobe für 'das' mit einem s?", a: "Man kann 'das' durch 'dies', 'jenes' oder 'welches' ersetzen." },
-        { q: "Bilde das Passiv: 'Ich wasche die Wäsche.'", a: "Die Wäsche wird gewaschen." },
-        { q: "Wann benutzt man den Konjunktiv I?", a: "In der indirekten Rede, um Aussagen sachlich wiederzugeben." },
-        { q: "Nenne ein Beispiel für ein Possessivpronomen.", a: "mein, dein, sein, unser, euer, ihr." },
-        { q: "Passiv Präteritum: 'Der Mann ___ operiert.'", a: "wurde" },
-        { q: "Was trennt ein Komma bei einem Satzgefüge?", a: "Den Hauptsatz vom Nebensatz." },
-        { q: "Wie fragt man nach dem Adverbiale des Grundes?", a: "Warum? Weshalb?" },
-        { q: "Bilde Futur II von 'sagen'.", a: "ich werde gesagt haben" },
-        { q: "Was ist eine Apposition?", a: "Ein Nomen, das ein anderes Nomen näher bestimmt und in Kommas steht. (z.B. Herr Wolf, der Verkäufer, ...)" },
-        { q: "Wechselpräpositionen: Wo? verlangt welchen Kasus?", a: "Dativ (Das Buch liegt auf dem Tisch)." },
-        { q: "Wechselpräpositionen: Wohin? verlangt welchen Kasus?", a: "Akkusativ (Ich lege das Buch auf den Tisch)." }
-    ];
+    // Wortarten & Pronomen
+    { q: "Wie lautet die Adjektiv-Endung im Dativ nach einem Begleiter?", a: "Die Endung ist '-n'. (Beispiel: dem alten Mann)" },
+    { q: "Nenne Beispiele für Demonstrativpronomen.", a: "dieser, jenes, der, die, das (hinweisende Fürwörter)." },
+    { q: "Was ist ein Relativpronomen? Nenne Beispiele.", a: "Es leitet einen Relativsatz ein. Beispiele: das Buch, DAS ich lese / der Arzt, DESSEN Rat ich befolge." },
+    { q: "Nenne Beispiele für Indefinitpronomen.", a: "etwas, manche, niemand, kein (unbestimmte Fürwörter)." },
+
+    // Adverbien
+    { q: "Welche 4 Fragen beantworten Adverbien?", a: "Wann? (Temporal), Wo? (Lokal), Wie? (Modal), Warum? (Kausal)." },
+    { q: "Was ist der Unterschied zwischen Adverb und Adverbiale?", a: "Adverb = Wortart (z.B. neulich). Adverbiale = Satzglied (Funktion im Satz)." },
+    { q: "Nenne ein Beispiel für ein Kausal-Adverb.", a: "deshalb, deswegen, darum." },
+
+    // Zeiten & Passiv
+    { q: "Was ist das Futur II?", a: "Die vollendete Zukunft. Etwas wird in der Zukunft abgeschlossen sein. (Ich werde geschrieben haben)." },
+    { q: "Wie bildet man das Passiv im Perfekt?", a: "Form von 'sein' + Partizip II + worden. (Beispiel: Er ist operiert worden)." },
+    { q: "Wie bildet man das Passiv im Plusquamperfekt?", a: "war/waren + Partizip II + worden. (Beispiel: Er war operiert worden)." },
+    { q: "Bilde das Passiv Präsens von: 'Die Mutter wäscht die Wäsche.'", a: "Die Wäsche wird (von der Mutter) gewaschen." },
+
+    // Präpositionen
+    { q: "Welchen Fall verlangen 'aus', 'wegen' und 'durch' laut deinen Notizen?", a: "aus -> Dativ | wegen -> Genitiv | durch -> Akkusativ." },
+    { q: "Wechselpräpositionen: Wann nutzt man den Dativ?", a: "Bei der Frage 'Wo?' (Position/Zustand). Beispiel: Das Buch steht auf dem Tisch." },
+    { q: "Wechselpräpositionen: Wann nutzt man den Akkusativ?", a: "Bei der Frage 'Wohin?' (Richtung/Aktion). Beispiel: Ich lege das Buch auf den Tisch." },
+
+    // Konjunktiv & Indirekte Rede
+    { q: "Wie bildet man den Konjunktiv I?", a: "Verbstamm + Endungen: -e, -est, -e, -en, -et, -en. (Beispiel: er komme, sie sei)." },
+    { q: "Wann nutzt man Ersatzformen (Konjunktiv II oder würde)?", a: "Wenn der Konjunktiv I genau wie der Indikativ (die normale Form) klingt." },
+    { q: "Bilde den Konjunktiv I von 'haben' (3. Person Singular).", a: "er/sie/es habe." },
+
+    // Satzbau & Rechtschreibung
+    { q: "Was ist die Ersatzprobe für 'das' (mit einem s)?", a: "Man kann es durch 'dies', 'jenes' oder 'welches' ersetzen." },
+    { q: "Wann schreibt man 'dass' (mit ss)?", a: "Wenn es eine Konjunktion ist, die einen Nebensatz einleitet (oft nach sagen, denken, glauben)." },
+    { q: "Was ist eine Apposition?", a: "Ein Nomen, das ein anderes Nomen näher bestimmt und in Kommas gesetzt wird. (z.B. Herr Wolf, der Verkäufer, ...)" },
+    { q: "Nenne 3 Arten von Adverbialsätzen.", a: "Temporalsatz (Zeit), Modalsatz (Art & Weise), Kausalsatz (Grund)." }
+];
 
     let currentCardIndex = 0;
 
