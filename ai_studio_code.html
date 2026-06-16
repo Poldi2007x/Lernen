@@ -246,11 +246,55 @@
 <script>
     // LERN-APP LOGIK
     const cards = [
-        { q: "Wie bildet man das Passiv Präsens?", a: "wird + Partizip II (Beispiel: wird gewaschen)" },
-        { q: "Was ist die Ersatzprobe für 'das'?", a: "dies, jenes, welches" },
-        { q: "Wann nutzt man den Konjunktiv I?", a: "Indirekte Rede" },
-        { q: "Nenne ein Temporal-Adverb.", a: "neulich, gestern, heute" }
-    ];
+    // --- 1. WÖRTER UND WORTARTEN ---
+    { q: "Welche Endung bekommt ein Adjektiv im Dativ nach einem Begleiter (z.B. Artikel)?", a: "Die Endung '-n'. Beispiel: 'Ich schenke dem alten Mann ein Buch.'" },
+    { q: "Wann benutzt man den bestimmten Artikel?", a: "Wenn ein Gegenstand, eine Situation oder eine Person schon bekannt ist." },
+    { q: "Was passiert beim unbestimmten Artikel im Plural?", a: "Der Begleiter fällt ganz weg. Beispiel: 'In der Stadt stehen Häuser.'" },
+    { q: "Nenne die 4 Arten von Pronomen aus deinen Notizen.", a: "1. Personalpronomen (ich, du...), 2. Demonstrativpronomen (dieser, jener...), 3. Possessivpronomen (mein, dein...), 4. Indefinitpronomen (etwas, manche...)" },
+    { q: "Was ist ein Relativpronomen?", a: "Es leitet einen Relativsatz ein und bezieht sich auf ein Nomen davor. Beispiel: 'Das Buch, das ich lese...'" },
+
+    // --- 2. ADVERBIEN ---
+    { q: "Was ist der Unterschied zwischen Adverb und Adverbiale?", a: "Adverb = Wortart (wie das Wort im Wörterbuch steht). Adverbiale = Satzglied (welche Rolle es im Satz spielt)." },
+    { q: "Nenne die 4 Arten von Adverbien und ihre Fragen.", a: "1. Temporal (Wann?), 2. Lokal (Wo/Wohin?), 3. Modal (Wie?), 4. Kausal (Warum?)" },
+    { q: "Nenne Beispiele für Kausal-Adverbien.", a: "deshalb, deswegen, darum." },
+
+    // --- 3. ZEITFORMEN (AKTIV) ---
+    { q: "Was ist das Plusquamperfekt?", a: "Die vollendete Vergangenheit. Handlung liegt lange zurück. Beispiel: 'Ich hatte gesagt / Er war gelaufen.'" },
+    { q: "Wofür nutzt man das Präteritum?", a: "Für die schriftliche Erzählform (einfache Vergangenheit). Beispiel: 'Ich schrieb / Er lief.'" },
+    { q: "Was beschreibt das Futur II?", a: "Eine Handlung, die in der Zukunft abgeschlossen sein wird. Beispiel: 'Ich werde geschrieben haben / Er wird gelaufen sein.'" },
+
+    // --- 4. AKTIV UND PASSIV ---
+    { q: "Wer ist im Aktiv-Satz wichtig, wer im Passiv-Satz?", a: "Aktiv: Der Täter (Subjekt) handelt. Passiv: Das Opfer/Objekt steht im Mittelpunkt, die Handlung wird betont." },
+    { q: "Bilde das Passiv Präsens: 'Die Mutter wäscht die Wäsche.'", a: "Die Wäsche wird (von der Mutter) gewaschen." },
+    { q: "Passiv Präteritum von 'operieren' (er)?", a: "Er wurde operiert." },
+    { q: "Passiv Perfekt von 'operieren' (er)?", a: "Er ist operiert worden." },
+    { q: "Passiv Plusquamperfekt von 'operieren' (er)?", a: "Er war operiert worden." },
+    { q: "Passiv Futur I von 'operieren' (er)?", a: "Er wird operiert werden." },
+    { q: "Passiv Futur II von 'operieren' (er)?", a: "Er wird operiert worden sein." },
+
+    // --- 5. PRÄPOSITIONEN ---
+    { q: "Welchen Fall verlangt 'aus dem Haus'?", a: "Dativ." },
+    { q: "Welchen Fall verlangt 'wegen des Regens'?", a: "Genitiv." },
+    { q: "Welchen Fall verlangt 'durch die Tür'?", a: "Akkusativ." },
+    { q: "Wechselpräpositionen: Wann nutzt man Dativ, wann Akkusativ?", a: "Wo? -> Dativ (Zustand). Wohin? -> Akkusativ (Richtung)." },
+
+    // --- 6. INDIREKTE REDE & KONJUNKTIV ---
+    { q: "Wie bildet man den Konjunktiv I?", a: "Verbstamm (Infinitiv ohne -en/-n) + Endung (-e, -est, -e, -en, -et, -en)." },
+    { q: "Konjunktiv I von 'kommen' (er)?", a: "er komme." },
+    { q: "Konjunktiv I von 'sein' (sie, Sg.)?", a: "sie sei." },
+    { q: "Wann nutzt man den Konjunktiv II als Ersatzform?", a: "Wenn der Konjunktiv I identisch mit dem Indikativ (Normalform) ist." },
+    { q: "Wie bildet man den Konjunktiv II?", a: "Präteritumform + Umlaut + Endung (z.B. gab -> gäbe)." },
+
+    // --- 7. ZEICHENSETZUNG & DAS/DASS ---
+    { q: "Wann schreibt man 'das' mit einem s?", a: "Wenn es ein Artikel oder Pronomen ist. Ersatzprobe: dies, jenes oder welches." },
+    { q: "Wann schreibt man 'dass' mit Doppel-s?", a: "Wenn es eine Konjunktion ist (verbindet Sätze). Steht oft nach Verben wie denken, glauben, sagen." },
+    { q: "Was ist eine Apposition?", a: "Ein Einschub, der ein Nomen näher erklärt. Er wird in Kommas gesetzt. Beispiel: 'Herr Wolf, der Verkäufer, ...'" },
+    { q: "Was trennt Kommas bei einer Aufzählung?", a: "Einzelne Teile, außer sie sind mit 'und' oder 'oder' verbunden." },
+
+    // --- 8. SATZBAU ---
+    { q: "Was ist ein Satzgefüge?", a: "Besteht aus Hauptsatz und Nebensatz (getrennt durch Komma, Nebensatz beginnt oft mit Konjunktion)." },
+    { q: "Nenne 3 Arten von Adverbialsätzen.", a: "1. Temporalsatz (Zeit: als, während...), 2. Modalsatz (Art: indem...), 3. Kausalsatz (Grund: da, weil)." }
+];
 
     let currentCardIndex = 0;
 
