@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch-Mentor | Profi Lern-App</title>
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --primary: #4a90e2;
+            --secondary: #58cc02; /* Duolingo-Grün für Motivation */
+            --accent: #ff9f43;
+            --text: #2d3436;
+            --shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            width: 100%;
+            background: white;
+            padding: 10px 0;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: 2px solid transparent;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav button.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(74, 144, 226, 0.1);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 90%;
+            max-width: 600px;
+            background: #dfe6e9;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            border-radius: 5px;
+            transition: 0.5s;
+        }
+
+        /* Karteikarten Style */
+        .content-section {
+            display: none;
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 50px;
+        }
+
+        .content-section.active { display: block; }
+
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 300px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+        }
+
+        .flashcard.flipped { transform: rotateY(180deg); }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: var(--card-bg);
+            box-sizing: border-box;
+        }
+
+        .flashcard-back {
+            background: var(--primary);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .hint { font-size: 0.8rem; color: #636e72; margin-top: 10px; }
+
+        /* Themen-Boxen */
+        .topic-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .power-tip {
+            background: #fff3cd;
+            border-left: 5px solid var(--accent);
+            padding: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th { background: #f8f9fa; }
+
+        .btn-next {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+        h1 { color: var(--primary); margin-top: 30px; }
+        h2 { color: var(--text); border-bottom: 2px solid var(--secondary); display: inline-block; }
+
+    </style>
+</head>
+<body>
+
+<h1>Deutsch-Mentor 🚀</h1>
+
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<nav>
+    <button onclick="showPage('start')" class="active">Übersicht</button>
+    <button onclick="showPage('cards')">🗂️ Karteikarten</button>
+    <button onclick="showPage('grammatik')">📖 Alle Regeln</button>
+</nav>
+
+<!-- SEITE 1: ÜBERSICHT -->
+<div id="start" class="content-section active">
+    <div class="topic-box">
+        <h2>Willkommen beim Lernen!</h2>
+        <p>Ich habe alle deine Notizen analysiert. Wir konzentrieren uns auf:</p>
+        <ul>
+            <li><strong>Wortarten:</strong> Nomen, Begleiter & Pronomen</li>
+            <li><strong>Verben:</strong> Alle Zeiten (Aktiv & Passiv)</li>
+            <li><strong>Satzbau:</strong> Adverbien, Komma & das/dass</li>
+        </ul>
+        <p>Klicke oben auf <strong>Karteikarten</strong>, um mit dem aktiven Training zu beginnen.</p>
+    </div>
+</div>
+
+<!-- SEITE 2: KARTEIKARTEN -->
+<div id="cards" class="content-section">
+    <h2 id="cardTopicTitle">Karteikarten Training</h2>
+    <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="cardElement">
+            <div class="flashcard-front">
+                <h3 id="cardQuestion">Frage wird geladen...</h3>
+                <p class="hint">(Klicken zum Umdrehen)</p>
+            </div>
+            <div class="flashcard-back">
+                <p id="cardAnswer">Antwort wird geladen...</p>
+            </div>
+        </div>
+    </div>
+    <button class="btn-next" onclick="nextCard()">Nächste Karte →</button>
+    <p style="text-align:center" id="cardCounter">Karte 1 von X</p>
+</div>
+
+<!-- SEITE 3: GRAMMATIK REGELN -->
+<div id="grammatik" class="content-section">
+    
+    <div class="topic-box">
+        <h2>1. Nomen & Begleiter</h2>
+        <div class="power-tip">Tipp: Im Dativ endet das Adjektiv nach dem Begleiter auf "-n"!</div>
+        <p><em>Beispiel:</em> Ich helfe dem alt<strong>en</strong> Mann.</p>
+        <h3>Pronomen-Checkliste:</h3>
+        <ul>
+            <li>Personal: ich, du, er/sie/es...</li>
+            <li>Possessiv: mein, dein, sein... (Besitz)</li>
+            <li>Relativ: der, die, das, dessen... (leitet Nebensatz ein)</li>
+        </ul>
+    </div>
+
+    <div class="topic-box">
+        <h2>2. Die Zeiten der Verben</h2>
+        <table>
+            <tr><th>Status</th><th>Zeitform</th><th>Beispiel</th></tr>
+            <tr><td>Vorbei</td><td>Plusquamperfekt</td><td>ich hatte gesagt</td></tr>
+            <tr><td>Vorbei</td><td>Perfekt</td><td>ich habe gesagt</td></tr>
+            <tr><td>Vorbei</td><td>Präteritum</td><td>ich sagte</td></tr>
+            <tr><td>Jetzt</td><td>Präsens</td><td>ich sage</td></tr>
+            <tr><td>Bald</td><td>Futur I</td><td>ich werde sagen</td></tr>
+            <tr><td>Bald</td><td>Futur II</td><td>ich werde gesagt haben</td></tr>
+        </table>
+    </div>
+
+    <div class="topic-box">
+        <h2>3. Passiv Bildung (Wichtig!)</h2>
+        <p>Das Objekt wird zum Subjekt. Fokus auf das Geschehen.</p>
+        <ul>
+            <li><strong>Präsens:</strong> wird operiert</li>
+            <li><strong>Präteritum:</strong> wurde operiert</li>
+            <li><strong>Perfekt:</strong> ist operiert worden</li>
+            <li><strong>Plusquamperfekt:</strong> war operiert worden</li>
+        </ul>
+    </div>
+
+    <div class="topic-box">
+        <h2>4. das oder dass?</h2>
+        <div class="power-tip">Ersatzprobe: Kannst du "dies", "jenes" oder "welches" sagen? -> Dann ein "s" (das).</div>
+        <p><em>Beispiel:</em> Das Buch, <strong>das</strong> (welches) ich lese, ist gut.</p>
+        <p><em>Beispiel:</em> Ich glaube, <strong>dass</strong> du recht hast. (Ersatzprobe klappt nicht!)</p>
+    </div>
+
+    <div class="topic-box">
+        <h2>5. Adverbien vs. Adverbialsatz</h2>
+        <p>Adverbien sind einzelne Wörter (heute, dort, deshalb). Adverbialsätze sind ganze Sätze mit Konjunktionen (weil, da, wenn, als).</p>
+        <ul>
+            <li><strong>Kausal:</strong> Grund (da, weil)</li>
+            <li><strong>Temporal:</strong> Zeit (nachdem, während)</li>
+            <li><strong>Modal:</strong> Art & Weise (indem)</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Karteikarten-Daten aus deinen Fotos
+    const cards = [
+        { q: "Wie lautet die Adjektiv-Endung im Dativ nach einem Artikel?", a: "Die Endung ist '-n'. (Beispiel: dem alten Mann)" },
+        { q: "Nenne die 4 Arten von Adverbien.", a: "1. Temporal (Wann?), 2. Lokal (Wo?), 3. Modal (Wie?), 4. Kausal (Warum?)" },
+        { q: "Was ist die Ersatzprobe für 'das' mit einem s?", a: "Man kann 'das' durch 'dies', 'jenes' oder 'welches' ersetzen." },
+        { q: "Bilde das Passiv: 'Ich wasche die Wäsche.'", a: "Die Wäsche wird gewaschen." },
+        { q: "Wann benutzt man den Konjunktiv I?", a: "In der indirekten Rede, um Aussagen sachlich wiederzugeben." },
+        { q: "Nenne ein Beispiel für ein Possessivpronomen.", a: "mein, dein, sein, unser, euer, ihr." },
+        { q: "Passiv Präteritum: 'Der Mann ___ operiert.'", a: "wurde" },
+        { q: "Was trennt ein Komma bei einem Satzgefüge?", a: "Den Hauptsatz vom Nebensatz." },
+        { q: "Wie fragt man nach dem Adverbiale des Grundes?", a: "Warum? Weshalb?" },
+        { q: "Bilde Futur II von 'sagen'.", a: "ich werde gesagt haben" },
+        { q: "Was ist eine Apposition?", a: "Ein Nomen, das ein anderes Nomen näher bestimmt und in Kommas steht. (z.B. Herr Wolf, der Verkäufer, ...)" },
+        { q: "Wechselpräpositionen: Wo? verlangt welchen Kasus?", a: "Dativ (Das Buch liegt auf dem Tisch)." },
+        { q: "Wechselpräpositionen: Wohin? verlangt welchen Kasus?", a: "Akkusativ (Ich lege das Buch auf den Tisch)." }
+    ];
+
+    let currentCardIndex = 0;
+
+    function showPage(pageId) {
+        document.querySelectorAll('.content-section').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        
+        if(pageId === 'cards') updateCard();
+    }
+
+    function flipCard() {
+        document.getElementById('cardElement').classList.toggle('flipped');
+    }
+
+    function updateCard() {
+        const card = cards[currentCardIndex];
+        document.getElementById('cardQuestion').innerText = card.q;
+        document.getElementById('cardAnswer').innerText = card.a;
+        document.getElementById('cardElement').classList.remove('flipped');
+        document.getElementById('cardCounter').innerText = `Karte ${currentCardIndex + 1} von ${cards.length}`;
+        
+        // Progress berechnen
+        const progress = ((currentCardIndex + 1) / cards.length) * 100;
+        document.getElementById('progressBar').style.width = progress + "%";
+    }
+
+    function nextCard() {
+        currentCardIndex = (currentCardIndex + 1) % cards.length;
+        updateCard();
+    }
+
+    // Start-Setup
+    updateCard();
+</script>
+
+</body>
+</html>
