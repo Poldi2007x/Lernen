@@ -9,7 +9,7 @@
             --bg: #f0f2f5;
             --card-bg: #ffffff;
             --primary: #4a90e2;
-            --secondary: #58cc02; /* Duolingo-Grün für Motivation */
+            --secondary: #58cc02;
             --accent: #ff9f43;
             --text: #2d3436;
             --shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -24,9 +24,9 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            transition: transform 0.5s, filter 0.5s; /* Für die Prank-Effekte */
         }
 
-        /* Navigation */
         nav {
             width: 100%;
             background: white;
@@ -57,7 +57,6 @@
             background: rgba(74, 144, 226, 0.1);
         }
 
-        /* Progress Bar */
         .progress-container {
             width: 90%;
             max-width: 600px;
@@ -75,7 +74,6 @@
             transition: 0.5s;
         }
 
-        /* Karteikarten Style */
         .content-section {
             display: none;
             width: 90%;
@@ -127,9 +125,6 @@
             transform: rotateY(180deg);
         }
 
-        .hint { font-size: 0.8rem; color: #636e72; margin-top: 10px; }
-
-        /* Themen-Boxen */
         .topic-box {
             background: white;
             padding: 20px;
@@ -146,18 +141,8 @@
             font-weight: bold;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
         th { background: #f8f9fa; }
 
         .btn-next {
@@ -166,50 +151,42 @@
             border: none;
             padding: 12px 25px;
             border-radius: 25px;
-            font-size: 1rem;
             cursor: pointer;
             display: block;
             margin: 20px auto;
         }
 
-        h1 { color: var(--primary); margin-top: 30px; }
-        h2 { color: var(--text); border-bottom: 2px solid var(--secondary); display: inline-block; }
+        /* Styling für das Troll-Menü */
+        #trollMenu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 5px solid #e74c3c;
+            padding: 30px;
+            z-index: 10000;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        
+        #trollMenu button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-weight: bold;
+        }
 
+        h1 { color: var(--primary); margin-top: 30px; }
     </style>
 </head>
 <body>
-
-    // Geheimes "Trolling" Menü (Tasten-Kombi: Drücke 'T' + 'R' gleichzeitig)
-let keys = {};
-window.onkeydown = function(e) {
-    keys[e.key.toLowerCase()] = true;
-    if (keys['t'] && keys['r']) {
-        document.getElementById('trollMenu').style.display = 'block';
-    }
-}
-window.onkeyup = function(e) { keys[e.key.toLowerCase()] = false; }
-
-// Trolling Funktionen
-function startTroll(type) {
-    if(type === 'rotate') {
-        document.body.style.transition = "5s";
-        document.body.style.transform = "rotate(180deg)";
-    }
-    if(type === 'blur') {
-        document.body.style.filter = "blur(5px)";
-    }
-    if(type === 'upsideDown') {
-        document.body.style.transform = "scaleY(-1)";
-    }
-    if(type === 'rainbow') {
-        setInterval(() => {
-            document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        }, 100);
-    }
-    if(type === 'fakeError') {
-        alert("KRITISCHER FEHLER: Dein Deutsch-Level ist zu niedrig für diese App! System wird in 5 Sekunden gelöscht.");
-    }
-}
 
 <h1>Deutsch-Mentor 🚀</h1>
 
@@ -223,131 +200,57 @@ function startTroll(type) {
     <button onclick="showPage('grammatik')">📖 Alle Regeln</button>
 </nav>
 
-<!-- SEITE 1: ÜBERSICHT -->
 <div id="start" class="content-section active">
     <div class="topic-box">
         <h2>Willkommen beim Lernen!</h2>
-        <p>Ich habe alle deine Notizen analysiert. Wir konzentrieren uns auf:</p>
-        <ul>
-            <li><strong>Wortarten:</strong> Nomen, Begleiter & Pronomen</li>
-            <li><strong>Verben:</strong> Alle Zeiten (Aktiv & Passiv)</li>
-            <li><strong>Satzbau:</strong> Adverbien, Komma & das/dass</li>
-        </ul>
-        <p>Klicke oben auf <strong>Karteikarten</strong>, um mit dem aktiven Training zu beginnen.</p>
+        <p>Nutze die Karteikarten, um dich auf deine Prüfung vorzubereiten.</p>
     </div>
 </div>
 
-<!-- SEITE 2: KARTEIKARTEN -->
 <div id="cards" class="content-section">
-    <h2 id="cardTopicTitle">Karteikarten Training</h2>
     <div class="flashcard-container" onclick="flipCard()">
         <div class="flashcard" id="cardElement">
             <div class="flashcard-front">
-                <h3 id="cardQuestion">Frage wird geladen...</h3>
-                <p class="hint">(Klicken zum Umdrehen)</p>
+                <h3 id="cardQuestion">Lade Frage...</h3>
+                <p style="font-size:0.8rem; color:#888;">(Klicken zum Umdrehen)</p>
             </div>
             <div class="flashcard-back">
-                <p id="cardAnswer">Antwort wird geladen...</p>
+                <p id="cardAnswer">Lade Antwort...</p>
             </div>
         </div>
     </div>
     <button class="btn-next" onclick="nextCard()">Nächste Karte →</button>
-    <p style="text-align:center" id="cardCounter">Karte 1 von X</p>
+    <p style="text-align:center" id="cardCounter"></p>
 </div>
 
-<!-- SEITE 3: GRAMMATIK REGELN -->
 <div id="grammatik" class="content-section">
-    
     <div class="topic-box">
-        <h2>1. Nomen & Begleiter</h2>
-        <div class="power-tip">Tipp: Im Dativ endet das Adjektiv nach dem Begleiter auf "-n"!</div>
-        <p><em>Beispiel:</em> Ich helfe dem alt<strong>en</strong> Mann.</p>
-        <h3>Pronomen-Checkliste:</h3>
-        <ul>
-            <li>Personal: ich, du, er/sie/es...</li>
-            <li>Possessiv: mein, dein, sein... (Besitz)</li>
-            <li>Relativ: der, die, das, dessen... (leitet Nebensatz ein)</li>
-        </ul>
+        <h2>Grammatik-Regeln</h2>
+        <p>Hier findest du alle wichtigen Infos aus deinen Notizen zusammengefasst.</p>
+        <div class="power-tip">Tipp: Ersatzprobe für "das": dies, jenes, welches.</div>
     </div>
+</div>
 
-    <div class="topic-box">
-        <h2>2. Die Zeiten der Verben</h2>
-        <table>
-            <tr><th>Status</th><th>Zeitform</th><th>Beispiel</th></tr>
-            <tr><td>Vorbei</td><td>Plusquamperfekt</td><td>ich hatte gesagt</td></tr>
-            <tr><td>Vorbei</td><td>Perfekt</td><td>ich habe gesagt</td></tr>
-            <tr><td>Vorbei</td><td>Präteritum</td><td>ich sagte</td></tr>
-            <tr><td>Jetzt</td><td>Präsens</td><td>ich sage</td></tr>
-            <tr><td>Bald</td><td>Futur I</td><td>ich werde sagen</td></tr>
-            <tr><td>Bald</td><td>Futur II</td><td>ich werde gesagt haben</td></tr>
-        </table>
-    </div>
-
-    <div class="topic-box">
-        <h2>3. Passiv Bildung (Wichtig!)</h2>
-        <p>Das Objekt wird zum Subjekt. Fokus auf das Geschehen.</p>
-        <ul>
-            <li><strong>Präsens:</strong> wird operiert</li>
-            <li><strong>Präteritum:</strong> wurde operiert</li>
-            <li><strong>Perfekt:</strong> ist operiert worden</li>
-            <li><strong>Plusquamperfekt:</strong> war operiert worden</li>
-        </ul>
-    </div>
-
-    <div class="topic-box">
-        <h2>4. das oder dass?</h2>
-        <div class="power-tip">Ersatzprobe: Kannst du "dies", "jenes" oder "welches" sagen? -> Dann ein "s" (das).</div>
-        <p><em>Beispiel:</em> Das Buch, <strong>das</strong> (welches) ich lese, ist gut.</p>
-        <p><em>Beispiel:</em> Ich glaube, <strong>dass</strong> du recht hast. (Ersatzprobe klappt nicht!)</p>
-    </div>
-
-    <div class="topic-box">
-        <h2>5. Adverbien vs. Adverbialsatz</h2>
-        <p>Adverbien sind einzelne Wörter (heute, dort, deshalb). Adverbialsätze sind ganze Sätze mit Konjunktionen (weil, da, wenn, als).</p>
-        <ul>
-            <li><strong>Kausal:</strong> Grund (da, weil)</li>
-            <li><strong>Temporal:</strong> Zeit (nachdem, während)</li>
-            <li><strong>Modal:</strong> Art & Weise (indem)</li>
-        </ul>
-    </div>
+<!-- DAS VERSTECKTE TROLL MENÜ -->
+<div id="trollMenu">
+    <h2 style="color: #e74c3c;">😈 Troll-Modus aktiv</h2>
+    <button onclick="startTroll('rotate')">Welt drehen</button>
+    <button onclick="startTroll('blur')">Alles unscharf</button>
+    <button onclick="startTroll('rainbow')">Disco-Farben</button>
+    <button onclick="startTroll('fakeError')">Fake System-Fehler</button>
+    <hr>
+    <button onclick="location.reload()" style="background:#2ecc71; color:white;">Alles zurücksetzen</button>
+    <button onclick="document.getElementById('trollMenu').style.display='none'">Menü schließen</button>
 </div>
 
 <script>
-    // Karteikarten-Daten aus deinen Fotos
+    // LERN-APP LOGIK
     const cards = [
-    // Wortarten & Pronomen
-    { q: "Wie lautet die Adjektiv-Endung im Dativ nach einem Begleiter?", a: "Die Endung ist '-n'. (Beispiel: dem alten Mann)" },
-    { q: "Nenne Beispiele für Demonstrativpronomen.", a: "dieser, jenes, der, die, das (hinweisende Fürwörter)." },
-    { q: "Was ist ein Relativpronomen? Nenne Beispiele.", a: "Es leitet einen Relativsatz ein. Beispiele: das Buch, DAS ich lese / der Arzt, DESSEN Rat ich befolge." },
-    { q: "Nenne Beispiele für Indefinitpronomen.", a: "etwas, manche, niemand, kein (unbestimmte Fürwörter)." },
-
-    // Adverbien
-    { q: "Welche 4 Fragen beantworten Adverbien?", a: "Wann? (Temporal), Wo? (Lokal), Wie? (Modal), Warum? (Kausal)." },
-    { q: "Was ist der Unterschied zwischen Adverb und Adverbiale?", a: "Adverb = Wortart (z.B. neulich). Adverbiale = Satzglied (Funktion im Satz)." },
-    { q: "Nenne ein Beispiel für ein Kausal-Adverb.", a: "deshalb, deswegen, darum." },
-
-    // Zeiten & Passiv
-    { q: "Was ist das Futur II?", a: "Die vollendete Zukunft. Etwas wird in der Zukunft abgeschlossen sein. (Ich werde geschrieben haben)." },
-    { q: "Wie bildet man das Passiv im Perfekt?", a: "Form von 'sein' + Partizip II + worden. (Beispiel: Er ist operiert worden)." },
-    { q: "Wie bildet man das Passiv im Plusquamperfekt?", a: "war/waren + Partizip II + worden. (Beispiel: Er war operiert worden)." },
-    { q: "Bilde das Passiv Präsens von: 'Die Mutter wäscht die Wäsche.'", a: "Die Wäsche wird (von der Mutter) gewaschen." },
-
-    // Präpositionen
-    { q: "Welchen Fall verlangen 'aus', 'wegen' und 'durch' laut deinen Notizen?", a: "aus -> Dativ | wegen -> Genitiv | durch -> Akkusativ." },
-    { q: "Wechselpräpositionen: Wann nutzt man den Dativ?", a: "Bei der Frage 'Wo?' (Position/Zustand). Beispiel: Das Buch steht auf dem Tisch." },
-    { q: "Wechselpräpositionen: Wann nutzt man den Akkusativ?", a: "Bei der Frage 'Wohin?' (Richtung/Aktion). Beispiel: Ich lege das Buch auf den Tisch." },
-
-    // Konjunktiv & Indirekte Rede
-    { q: "Wie bildet man den Konjunktiv I?", a: "Verbstamm + Endungen: -e, -est, -e, -en, -et, -en. (Beispiel: er komme, sie sei)." },
-    { q: "Wann nutzt man Ersatzformen (Konjunktiv II oder würde)?", a: "Wenn der Konjunktiv I genau wie der Indikativ (die normale Form) klingt." },
-    { q: "Bilde den Konjunktiv I von 'haben' (3. Person Singular).", a: "er/sie/es habe." },
-
-    // Satzbau & Rechtschreibung
-    { q: "Was ist die Ersatzprobe für 'das' (mit einem s)?", a: "Man kann es durch 'dies', 'jenes' oder 'welches' ersetzen." },
-    { q: "Wann schreibt man 'dass' (mit ss)?", a: "Wenn es eine Konjunktion ist, die einen Nebensatz einleitet (oft nach sagen, denken, glauben)." },
-    { q: "Was ist eine Apposition?", a: "Ein Nomen, das ein anderes Nomen näher bestimmt und in Kommas gesetzt wird. (z.B. Herr Wolf, der Verkäufer, ...)" },
-    { q: "Nenne 3 Arten von Adverbialsätzen.", a: "Temporalsatz (Zeit), Modalsatz (Art & Weise), Kausalsatz (Grund)." }
-];
+        { q: "Wie bildet man das Passiv Präsens?", a: "wird + Partizip II (Beispiel: wird gewaschen)" },
+        { q: "Was ist die Ersatzprobe für 'das'?", a: "dies, jenes, welches" },
+        { q: "Wann nutzt man den Konjunktiv I?", a: "Indirekte Rede" },
+        { q: "Nenne ein Temporal-Adverb.", a: "neulich, gestern, heute" }
+    ];
 
     let currentCardIndex = 0;
 
@@ -355,25 +258,18 @@ function startTroll(type) {
         document.querySelectorAll('.content-section').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-        event.currentTarget.classList.add('active');
-        
+        if(event) event.currentTarget.classList.add('active');
         if(pageId === 'cards') updateCard();
     }
 
-    function flipCard() {
-        document.getElementById('cardElement').classList.toggle('flipped');
-    }
+    function flipCard() { document.getElementById('cardElement').classList.toggle('flipped'); }
 
     function updateCard() {
-        const card = cards[currentCardIndex];
-        document.getElementById('cardQuestion').innerText = card.q;
-        document.getElementById('cardAnswer').innerText = card.a;
+        document.getElementById('cardQuestion').innerText = cards[currentCardIndex].q;
+        document.getElementById('cardAnswer').innerText = cards[currentCardIndex].a;
         document.getElementById('cardElement').classList.remove('flipped');
         document.getElementById('cardCounter').innerText = `Karte ${currentCardIndex + 1} von ${cards.length}`;
-        
-        // Progress berechnen
-        const progress = ((currentCardIndex + 1) / cards.length) * 100;
-        document.getElementById('progressBar').style.width = progress + "%";
+        document.getElementById('progressBar').style.width = ((currentCardIndex + 1) / cards.length * 100) + "%";
     }
 
     function nextCard() {
@@ -381,43 +277,33 @@ function startTroll(type) {
         updateCard();
     }
 
+    // TROLL-LOGIK
+    let keys = {};
+    window.onkeydown = function(e) {
+        keys[e.key.toLowerCase()] = true;
+        // AKTIVIERUNG: T + R gleichzeitig drücken
+        if (keys['t'] && keys['r']) {
+            document.getElementById('trollMenu').style.display = 'block';
+        }
+    }
+    window.onkeyup = function(e) { keys[e.key.toLowerCase()] = false; }
+
+    function startTroll(type) {
+        if(type === 'rotate') document.body.style.transform = "rotate(180deg)";
+        if(type === 'blur') document.body.style.filter = "blur(6px)";
+        if(type === 'rainbow') {
+            setInterval(() => {
+                document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+            }, 150);
+        }
+        if(type === 'fakeError') {
+            alert("ACHTUNG: Dein Deutsch-Level ist zu niedrig. Der Prozessor überhitzt! Systemabschaltung in 5 Sekunden...");
+        }
+    }
+
     // Start-Setup
-    updateCard();
+    showPage('start');
 </script>
-
-    // Geheimes "Trolling" Menü (Tasten-Kombi: Drücke 'T' + 'R' gleichzeitig)
-let keys = {};
-window.onkeydown = function(e) {
-    keys[e.key.toLowerCase()] = true;
-    if (keys['t'] && keys['r']) {
-        document.getElementById('trollMenu').style.display = 'block';
-    }
-}
-window.onkeyup = function(e) { keys[e.key.toLowerCase()] = false; }
-
-// Trolling Funktionen
-function startTroll(type) {
-    if(type === 'rotate') {
-        document.body.style.transition = "5s";
-        document.body.style.transform = "rotate(180deg)";
-    }
-    if(type === 'blur') {
-        document.body.style.filter = "blur(5px)";
-    }
-    if(type === 'upsideDown') {
-        document.body.style.transform = "scaleY(-1)";
-    }
-    if(type === 'rainbow') {
-        setInterval(() => {
-            document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        }, 100);
-    }
-    if(type === 'fakeError') {
-        alert("KRITISCHER FEHLER: Dein Deutsch-Level ist zu niedrig für diese App! System wird in 5 Sekunden gelöscht.");
-    }
-}
-
-
 
 </body>
 </html>
