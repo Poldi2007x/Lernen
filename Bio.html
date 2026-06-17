@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernkarten: Das Ohr</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            width: 350px;
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .card-front {
+            background-color: #ffffff;
+            color: #2c3e50;
+            border: 3px solid #3498db;
+        }
+
+        .card-back {
+            background-color: #3498db;
+            color: white;
+            transform: rotateY(180deg);
+            font-weight: normal;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c3e50;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #34495e;
+        }
+
+        .progress {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        h1 { color: #2c3e50; margin-bottom: 5px; }
+        p { color: #7f8c8d; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Lernkarten: Das Ohr</h1>
+    <p>Klicke auf die Karte, um sie umzudrehen.</p>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-face card-front" id="front-text">Frage lädt...</div>
+            <div class="card-face card-back" id="back-text">Antwort lädt...</div>
+        </div>
+    </div>
+
+    <div class="progress" id="progress-text">Karte 1 von X</div>
+
+    <div class="controls">
+        <button onclick="prevCard()">Zurück</button>
+        <button onclick="nextCard()">Nächste</button>
+    </div>
+
+    <script>
+        const cards = [
+            { q: "Was ist der adäquate Reiz für das Ohr?", a: "Schallwellen" },
+            { q: "Wovon hängt die Tonhöhe ab?", a: "Von der Schallfrequenz (Anzahl der Schwingungen pro Sekunde)." },
+            { q: "Hohe Frequenz bedeutet...", a: "... hoher Ton." },
+            { q: "Was gehört zum Außenohr?", a: "1. Ohrmuschel\n2. Gehörgang\n3. Trommelfell" },
+            { q: "Nenne die 3 Gehörknöchelchen im Mittelohr.", a: "Hammer, Amboss und Steigbügel." },
+            { q: "Was ist die Aufgabe der Ohrtrompete?", a: "Druckausgleich (Verbindung zum Rachenraum)." },
+            { q: "Wie heißt das Gehörknöchelchen, das direkt am ovalen Fenster sitzt?", a: "Der Steigbügel." },
+            { q: "Wo wird der Schall in elektrische Impulse umgewandelt?", a: "In der Schnecke (Innenohr)." },
+            { q: "Womit ist die Schnecke gefüllt?", a: "Mit einer Flüssigkeit namens Lymphe." },
+            { q: "Welches Organ im Innenohr ist für das Gleichgewicht zuständig?", a: "Die Bogengänge." },
+            { q: "Wie heißt der Nerv, der die Signale zum Gehirn leitet?", a: "Hörnerv." },
+            { q: "Was ist die Funktion des Trommelfells?", a: "Es wandelt Schallwellen in mechanische Schwingungen um." }
+        ];
+
+        let currentIndex = 0;
+        const cardElement = document.getElementById('card');
+        const frontText = document.getElementById('front-text');
+        const backText = document.getElementById('back-text');
+        const progressText = document.getElementById('progress-text');
+
+        function updateCard() {
+            cardElement.classList.remove('is-flipped');
+            setTimeout(() => {
+                frontText.innerText = cards[currentIndex].q;
+                backText.innerText = cards[currentIndex].a;
+                progressText.innerText = `Karte ${currentIndex + 1} von ${cards.length}`;
+            }, 150);
+        }
+
+        function flipCard() {
+            cardElement.classList.toggle('is-flipped');
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCard();
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            updateCard();
+        }
+
+        // Initialisierung
+        updateCard();
+    </script>
+</body>
+</html>
