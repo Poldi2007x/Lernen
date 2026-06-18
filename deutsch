@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sätze abwechslungsreich gestalten - Lerntool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 { color: #2980b9; border-bottom: 2px solid #2980b9; padding-bottom: 5px; }
+        .rule { background-color: #e8f4fd; border-left: 5px solid #2980b9; padding: 10px; margin: 10px 0; }
+        .task { font-weight: bold; color: #e67e22; margin-top: 20px; }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background-color: #219150; }
+        .feedback { margin-top: 10px; padding: 10px; display: none; border-radius: 4px; }
+        .correct { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .incorrect { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .hint { font-size: 0.9em; color: #666; font-style: italic; }
+        code { background: #eee; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sätze abwechslungsreich gestalten</h1>
+    <p>Satzreihen, Satzgefüge und abwechslungsreicher Satzbau</p>
+</header>
+
+<div class="section">
+    <h2>1. Wissen: Satzreihe vs. Satzgefüge</h2>
+    <div class="rule">
+        <p><strong>Satzreihe (SR):</strong> Zwei Hauptsätze werden verbunden (z.B. mit <em>und, oder, denn, aber</em>).<br>
+        <em>Beispiel:</em> Ich gehe wandern <strong>denn</strong> die Sonne scheint. (Verb an Position 2)</p>
+    </div>
+    <div class="rule">
+        <p><strong>Satzgefüge (SG):</strong> Ein Hauptsatz und ein Nebensatz werden verbunden (z.B. mit <em>weil, dass, wenn, bevor</em>).<br>
+        <em>Beispiel:</em> Ich gehe wandern, <strong>weil</strong> die Sonne <u>scheint</u>. (Verb rutscht ans Ende!)</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Übung 1: Sätze verbinden</h2>
+    <p>Verbinde die Sätze sinnvoll mit einer Konjunktion aus der Box: <br>
+    <code>dass • bevor • falls • denn • weil • wenn • der</code></p>
+
+    <div class="task">A. Informiere dich über die Gegend. Du lässt dich auf Canyoning ein. (Satzgefüge)</div>
+    <input type="text" id="q1" placeholder="Deine Lösung hier eingeben...">
+    <button onclick="check('q1', 'Informiere dich über die Gegend, bevor du dich auf Canyoning einlässt.')">Prüfen</button>
+    <div id="q1-fb" class="feedback"></div>
+
+    <div class="task">B. Du kennst die Strecke nicht. Vertraue dich einem Führer an. (Beginne mit 'Wenn')</div>
+    <input type="text" id="q2" placeholder="Deine Lösung hier eingeben...">
+    <button onclick="check('q2', 'Wenn du die Strecke nicht kennst, vertraue dich einem erfahrenen Führer an.')">Prüfen</button>
+    <div id="q2-fb" class="feedback"></div>
+
+    <div class="task">C. Höre auf die Anweisungen deines Führers. Er kennt das Vorgehen. (Relativsatz mit 'der')</div>
+    <input type="text" id="q3" placeholder="Deine Lösung hier eingeben...">
+    <button onclick="check('q3', 'Höre auf die Anweisungen deines Führers, der das Vorgehen kennt.')">Prüfen</button>
+    <div id="q3-fb" class="feedback"></div>
+</div>
+
+<div class="section">
+    <h2>Übung 2: Satzbau umstellen</h2>
+    <p>Stelle das Satzgefüge um. Der Nebensatz soll nun <strong>nach</strong> dem Hauptsatz stehen.</p>
+    <div class="task">Vorlage: Sobald die Sommerferien beginnen, fahre ich nach Österreich.</div>
+    <input type="text" id="q4" placeholder="Hauptsatz zuerst...">
+    <button onclick="check('q4', 'Ich fahre nach Österreich, sobald die Sommerferien beginnen.')">Prüfen</button>
+    <div id="q4-fb" class="feedback"></div>
+    <p class="hint">Achtung: Wenn der Hauptsatz vorne steht, ist das Verb wieder an Position 2 ("fahre ich" wird zu "Ich fahre").</p>
+</div>
+
+<div class="section">
+    <h2>Übung 3: Den Text verbessern (Tagebuch)</h2>
+    <p>Verbinde diese zwei Sätze zu einem Satzgefüge mit <strong>"nachdem"</strong>:</p>
+    <div class="task">Wir frühstückten. Wir fuhren in Richtung der Reißeck-Gruppe.</div>
+    <input type="text" id="q5" placeholder="Nachdem wir...">
+    <button onclick="check('q5', 'Nachdem wir gefrühstückt hatten, fuhren wir in Richtung der Reißeck-Gruppe.')">Prüfen</button>
+    <div id="q5-fb" class="feedback"></div>
+    <p class="hint">Tipp: Bei "nachdem" benutzt man oft das Plusquamperfekt (hatten gefrühstückt).</p>
+</div>
+
+<script>
+    function check(id, correct) {
+        const input = document.getElementById(id).value.trim();
+        const feedback = document.getElementById(id + '-fb');
+        
+        // Einfacher Vergleich (ignoriert Punkt am Ende und Groß/Kleinschreibung am Anfang teilweise für Kulanz)
+        let cleanInput = input.replace(/\.$/, "").toLowerCase();
+        let cleanCorrect = correct.replace(/\.$/, "").toLowerCase();
+
+        if (cleanInput === cleanCorrect) {
+            feedback.innerHTML = "<strong>Richtig!</strong> " + correct;
+            feedback.className = "feedback correct";
+            feedback.style.display = "block";
+        } else {
+            feedback.innerHTML = "<strong>Fast richtig!</strong> Versuchs noch mal oder schau dir die Lösung an: <br><em>" + correct + "</em>";
+            feedback.className = "feedback incorrect";
+            feedback.style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>
